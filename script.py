@@ -45,8 +45,15 @@ with open(file_path, mode='w+') as csv_file:
 				os.makedirs(group_path)
 
 
-			try:
-				url.urlretrieve(driver.find_element_by_xpath("//*[@id='main']/header/div[1]/div/img").get_attribute('src'),group_path+'/photo.jpg')
+			try:#group pp parse
+				link = driver.find_element_by_xpath("//*[@id='main']/header/div[1]/div/img").get_attribute('src')
+				driver.execute_script(f'window.open();')				
+				driver.switch_to.window(driver.window_handles[-1])
+				driver.get(link)
+				picture = driver.find_element_by_xpath('/html/body/img')
+				image = picture.screenshot(group_path+'/pp.png')
+				driver.close()
+				driver.switch_to.window(driver.window_handles[0])
 			except Exception:
 				print("no photo")
 
@@ -64,7 +71,6 @@ with open(file_path, mode='w+') as csv_file:
 
 				for number in contacts:#bolshaya dira
 					group_writer.writerow({'name':name+str(i),'number':number})
-
 					if('+' in number):
 						writer.writerow({fn[0]: name + str(i), fn[1]: name +str(i), fn[2]: 'Mobile', fn[3]: number})
 					i+=1
