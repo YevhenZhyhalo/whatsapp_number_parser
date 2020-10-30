@@ -3,6 +3,8 @@ import selenium.webdriver as webdriver
 import selenium.webdriver.support.ui as ui
 import os,time,csv,re,datetime
 import urllib.request as url
+import vcfpy as vcf
+
 #variables
 fn = ['Name', 'Given Name', 'Phone 1 - Type', 'Phone 1 - Value']
 file_path  ='contacts-' +datetime.datetime.now(tz=None).strftime("%h-%d_%H:%M")+'.csv'
@@ -64,7 +66,7 @@ with open(file_path, mode='w+') as csv_file:
 			contacts = panel_parsed.get_attribute('title').split(',')
 
 			i = 1
-			with open(group_path+'/'+name+'.csv', mode='w+') as csv_group_file:
+			with open(group_path+'/contacts.csv', mode='w+') as csv_group_file:
 				group_writer = csv.DictWriter(csv_group_file, fieldnames=['name','number'])
 				group_writer.writeheader()
 
