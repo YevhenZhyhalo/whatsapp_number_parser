@@ -3,7 +3,7 @@ import selenium.webdriver as webdriver
 import selenium.webdriver.support.ui as ui
 import os,time,csv,re,datetime
 import urllib.request as url
-import vcfpy as vcf
+
 
 #variables
 fn = ['Name', 'Given Name', 'Phone 1 - Type', 'Phone 1 - Value']
@@ -30,7 +30,7 @@ with open(file_path, mode='w+') as csv_file:
 	for panel in left_panel:
 		panel.click()
 		name = driver.find_element_by_xpath(
-            "//*[@id='main']/header/div[2]/div[1]/div/span").get_attribute('title')
+            "//*[@id='main']/header/div[2]/div[1]/div/span").get_attribute('title').replace('/',' ')
 		panel_parsed = driver.find_element_by_xpath(
 		"//*[@id='main']/header/div[2]/div[2]/span")
 
@@ -67,14 +67,12 @@ with open(file_path, mode='w+') as csv_file:
 
 			i = 1
 			with open(group_path+'/contacts.csv', mode='w+') as csv_group_file:
-				group_writer = csv.DictWriter(csv_group_file, fieldnames=['name','number'])
-				group_writer.writeheader()
-
-
+				group_writer = csv.DictWriter(csv_group_file, fieldnames=['number'])
 				for number in contacts:#bolshaya dira
-					group_writer.writerow({'name':name+str(i),'number':number})
+					group_writer.writerow({'number':number})
+					
 					if('+' in number):
-						writer.writerow({fn[0]: name + str(i), fn[1]: name +str(i), fn[2]: 'Mobile', fn[3]: number})
+						writer.writerow({fn[0]: name + f'{i:04d}', fn[1]: name + f'{i:04d}', fn[2]: 'Mobile', fn[3]: number})
 					i+=1
 					
 
