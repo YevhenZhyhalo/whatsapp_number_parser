@@ -18,19 +18,14 @@ wait = ui.WebDriverWait(driver, 20)
 input("Press enter after scanning QR.\n ")
 
 i = 0
-for dir in os.walk(path):     
-	os.chdir(dir[0])
+for dir in os.walk('/home/gekailovegeka/whatsapp_number_parser/Groups/'):     
 	if(i!=0):
 		print(dir[0])
-	
-	
-		dir[0].split('/')[]
-
 		button = driver.find_element_by_xpath('//*[@id="side"]/header/div[2]/div/span/div[2]/div/span')
 		button.click()
 		new_group = driver.find_element_by_xpath('//*[@id="app"]/div/div/div[2]/div[1]/span/div/span/div/div[2]/div[1]/div/div[1]/div[2]/div/div')
 		new_group.click()
-		numbers= open(xxx,'r').read().split('\n')
+		numbers= open(dir[0]+'/contacts.csv','r').read().split('\n')
 		find_box= driver.find_element_by_xpath('//*[@id="app"]/div/div/div[2]/div[1]/span/div/span/div/div/div[1]/div/div/input')
 		for num in numbers:
 			find_box.clear()
@@ -39,10 +34,12 @@ for dir in os.walk(path):
 			find_box.send_keys('\n')
 		finish_box = find_element_by_xpath('//*[@id="app"]/div/div/div[2]/div[1]/span/div/span/div/div/div[2]/div/div[2]/div/div[2]')
 		finish_box.click()
-		finish_box.send_keys('name')
+		finish_box.send_keys(dir[0].split('/')[-1])
 		finish_box.send_keys('\n')
-	i=i+1
+		with open('group_names.txt','a+') as group_files:
+				group_files.write(dir[0].split('/')[-1]+'\n')
 
+	i = 1+i
 
 
 

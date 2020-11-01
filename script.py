@@ -60,7 +60,7 @@ with open(file_path, mode='w+') as csv_file:
 				print("no photo")
 
 
-			time.sleep(2)# Write logic
+			time.sleep(3)# Write logic
 			panel_parsed = driver.find_element_by_xpath(
                 "//*[@id='main']/header/div[2]/div[2]/span")
 			contacts = panel_parsed.get_attribute('title').split(',')
@@ -68,7 +68,7 @@ with open(file_path, mode='w+') as csv_file:
 			i = 1
 			with open(group_path+'/contacts.csv', mode='w+') as csv_group_file:
 				group_writer = csv.DictWriter(csv_group_file, fieldnames=['number'])
-				with open('numbers.txt','a') as numbers_file:
+				with open('numbers.txt','a+') as numbers_file:
 
 					for number in contacts:#bolshaya dira
 						group_writer.writerow({'number':number})
@@ -83,13 +83,13 @@ with open(file_path, mode='w+') as csv_file:
 
 		else:  # ?????? nuzhno li???
 			panel_parsed.click()
-			time.sleep(1)
+			time.sleep(3)
 			paneltwo = driver.find_element_by_xpath(
                 "//*[@id='app']/div/div/div[2]/div[3]/span/div/span/div/div/div[1]/div[4]/div[3]/div/div/span/span")
 			number = paneltwo.text
 			writer.writerow({fn[0]: name, fn[1]: name , fn[2]: 'Mobile', fn[3]: number})
-			with open('numbers.txt','a') as numbres_file:
-				numbers_file.write(number+'\n')
+			with open('numbers.txt','a+') as numbers_file:
+				numbers_file.write(" "+number+'\n')
 
 
 
